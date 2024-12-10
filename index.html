@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
-<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
+
 <html class="no-js" lang="en">
-<!--<![endif]-->
+
 
 <head>
 
@@ -933,33 +931,32 @@
 
             <!-- Footer Description -->
             <div class="col-six tab-full left footer-desc">
-                <div class="footer-logo">
-                    <img src="images/logo-footer.svg" alt="Jensen & Juhl Logo">
-                </div>
+                <div class="footer-logo">  </div>
                 <p>
                     At Jensen & Juhl, we’re committed to transforming ideas into impactful realities. With expertise in
                     design, production, and branding, our strategic partnerships create memorable experiences that
                     connect brands with their audiences. Let’s build the future together.
                 </p>
-            </div>
-
-            <!-- Footer Subscribe -->
-            <div class="col-six tab-full right footer-subscribe">
-                <h4>Stay Updated</h4>
-                <p>Subscribe to our newsletter to receive the latest insights, project highlights, and updates from the
-                    Jensen & Juhl Group.</p>
-
-                <div class="subscribe-form">
-                    <form id="mc-form" class="group" novalidate>
-                        <input type="email" name="EMAIL" class="email" id="mc-email" placeholder="Your Email Address"
-                            required aria-required="true">
-                        <input type="submit" name="subscribe" value="Subscribe" class="btn--primary">
-                        <label for="mc-email" class="subscribe-message"></label>
-                    </form>
                 </div>
-            </div>
-
-        </div> <!-- end footer-main -->
+                
+                <!-- Footer Subscribe -->
+                <div class="col-six tab-full right footer-subscribe">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to our newsletter to receive the latest insights, project highlights, and updates from the
+                        Jensen & Juhl Group.</p>
+                
+                    <div class="subscribe-form">
+                        <form id="mc-form" class="group" action="https://formspree.io/f/movqzled" method="POST" novalidate>
+                            <input type="email" name="email" class="email" id="mc-email" placeholder="Your Email Address" required
+                                aria-required="true" style="width: 50%; max-width: 500px; padding: 10px; box-sizing: border-box;">
+                            <input type="submit" name="subscribe" value="Subscribe" class="btn--primary">
+                        </form>
+                        <p id="form-response" style="display: none; margin-top: 10px;"></p>
+                    </div>
+                
+                </div>
+                
+                </div> <!-- end footer-main -->
 
         <!-- Footer Bottom -->
         <div class="row footer-bottom">
@@ -1084,27 +1081,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    gsap.registerPlugin(ScrollTrigger);
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof gsap !== "undefined") {
+                gsap.to("#rotating-element", {
+                    rotation: 360,
+                    transformOrigin: "50% 50%",
+                    duration: 15,
+                    repeat: -1,
+                    ease: "linear"
+                });
+            } else {
+                console.warn("GSAP not loaded");
+            }
+        });
+        </script>
+<script>
+document.getElementById("mc-form").addEventListener("submit", async function (e) {
+    e.preventDefault(); // Prevent default form submission
 
-    gsap.to("#rotating-element", {
-    rotation: 360,
-    transformOrigin: "50% 50%", // Adjust based on your SVG's structure
-    scrollTrigger: {
-        trigger: "#home",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-        markers: true,
-    },
+    const form = e.target;
+    const responseMessage = document.getElementById("form-response");
+    const formData = new FormData(form);
+
+    try {
+        // Send the form data to Formspree
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                Accept: "application/json",
+            },
+        });
+
+        // Check if the response is OK
+        if (response.ok) {
+            responseMessage.style.display = "block";
+            responseMessage.style.color = "green";
+            responseMessage.textContent = "Thank you for subscribing!";
+            form.reset(); // Clear the form fields
+
+            // Automatically hide the success message after 5 seconds
+            setTimeout(() => {
+                responseMessage.style.display = "none";
+            }, 5000); // 5000ms = 5 seconds
+        } else {
+            throw new Error("Subscription failed. Please try again.");
+        }
+    } catch (error) {
+        responseMessage.style.display = "block";
+        responseMessage.style.color = "red";
+        responseMessage.textContent = error.message;
+
+        // Automatically hide the error message after 5 seconds
+        setTimeout(() => {
+            responseMessage.style.display = "none";
+        }, 5000); // 5000ms = 5 seconds
+    }
 });
 
-
-});
-
-
-    </script>
-    
+</script>
 
 
 </body>

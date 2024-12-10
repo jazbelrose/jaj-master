@@ -205,7 +205,7 @@ button.error {
  * ## links
  * ------------------------------------------------------------------- */
 a {
-    color: #0087cc;
+    color: white;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
@@ -828,8 +828,8 @@ input[type="url"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-    color: #000000;
-    border-bottom: 2px solid black;
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid #B5A642;
 }
 
 label, legend {
@@ -3734,7 +3734,7 @@ footer .row {
     color: #FFFFFF;
     background: #B5A642;
     border-color: #B5A642;
-    padding: 0 20px;
+    padding: 0 50px;
     border-radius: 5px;
 
 }
@@ -3749,6 +3749,7 @@ footer .row {
 .footer-subscribe #mc-form label i {
     padding-right: 6px;
 }
+
 
 
 /* ---------------------------------------------------------------
@@ -3923,7 +3924,7 @@ footer .row {
     .subscribe-form input[type="email"], 
     .subscribe-form input[type="submit"] {
       font-size: 1.3rem;
-      padding: 5px;
+      padding: 10px;
     }
   }
   

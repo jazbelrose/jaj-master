@@ -1,5 +1,5 @@
 /* ===================================================================
- * Glint - Main JS
+ * JAJ - Main JS
  *
  * ------------------------------------------------------------------- */
 
@@ -280,7 +280,12 @@
 
    /* Smooth Scrolling
     * ------------------------------------------------------ */
-    var clSmoothScroll = function() {
+    
+   
+   
+   
+   
+   var clSmoothScroll = function() {
         
         $('.smoothscroll').on('click', function (e) {
             var target = this.hash,
@@ -389,49 +394,19 @@ var clContactForm = function() {
     * ------------------------------------------------------ */
     var clAOS = function() {
         
-        AOS.init( {
+        AOS.init({
             offset: 200,
             duration: 600,
             easing: 'ease-in-sine',
             delay: 300,
             once: true,
-            disable: 'mobile'
+            //   
         });
-
-    };
-
-
-   /* AjaxChimp
-    * ------------------------------------------------------ */
-    var clAjaxChimp = function() {
         
-        $('#mc-form').ajaxChimp({
-            language: 'es',
-            url: cfg.mailChimpURL
-        });
-
-        // Mailchimp translation
-        //
-        //  Defaults:
-        //	 'submit': 'Submitting...',
-        //  0: 'We have sent you a confirmation email',
-        //  1: 'Please enter a value',
-        //  2: 'An email address must contain a single @',
-        //  3: 'The domain portion of the email address is invalid (the portion after the @: )',
-        //  4: 'The username portion of the email address is invalid (the portion before the @: )',
-        //  5: 'This email address looks fake or invalid. Please enter a real email address'
-
-        $.ajaxChimp.translations.es = {
-            'submit': 'Submitting...',
-            0: '<i class="fa fa-check"></i> We have sent you a confirmation email',
-            1: '<i class="fa fa-warning"></i> You must enter a valid e-mail address.',
-            2: '<i class="fa fa-warning"></i> E-mail address is not valid.',
-            3: '<i class="fa fa-warning"></i> E-mail address is not valid.',
-            4: '<i class="fa fa-warning"></i> E-mail address is not valid.',
-            5: '<i class="fa fa-warning"></i> E-mail address is not valid.'
-        } 
 
     };
+
+
 
 
    /* Back to Top
@@ -455,8 +430,8 @@ var clContactForm = function() {
     };
 
 
-   /* Initialize
-    * ------------------------------------------------------ */
+    /* Initialize
+     * ------------------------------------------------------ */
     (function ssInit() {
         
         clPreloader();
@@ -471,12 +446,25 @@ var clContactForm = function() {
         clAlertBoxes();
         clContactForm();
         clAOS();
-        clAjaxChimp();
+       
         clBackToTop();
 
+        
+        $(window).on('load', function() {
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.refresh();
+            }
+
+            // Dynamically update the copyright year after load
+            const yearSpan = document.getElementById("current-year");
+            if (yearSpan) {
+                const currentYear = new Date().getFullYear();
+                yearSpan.textContent = currentYear;
+            }
+        });
+
     })();
-        
-        
+
 })(jQuery);
 
 // Dynamically update the copyright year
