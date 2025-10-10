@@ -1,0 +1,38 @@
+/* root opaque so Safari’s bars can’t sample purple behind */
+html, body { background:#0c0c0c; }
+
+/* solid underlay while menu is open (sits under the overlay) */
+body.menu-open { overflow:hidden; isolation:isolate; } /* new stacking context */
+body.menu-open::before{
+  content:"";
+  position:fixed;
+  inset:0;                 /* no vh math */
+  background:#0c0c0c;      /* OPAQUE */
+  z-index:2147483646;      /* just under .nav-bar-menu */
+  pointer-events:none;
+}
+
+/* the actual overlay panel — now portaled to <body> */
+.nav-bar-menu{
+  position:fixed;
+  inset:0;                 /* avoid vh/svh issues */
+  z-index:2147483647;
+  background:#0c0c0c;      /* keep opaque; do glass on inner content if needed */
+  padding:
+    calc(env(safe-area-inset-top) + 16px)
+    calc(env(safe-area-inset-right) + 16px)
+    calc(env(safe-area-inset-bottom) + 24px)
+    calc(env(safe-area-inset-left) + 16px);
+  visibility:hidden;       /* gsap toggles */
+}
+.nav-bar-menu.opened{ visibility:visible; }
+
+.svg-wrapper, .svg-wrapper svg{
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none;
+}
+
+.menu-wrapper{
+  position:relative; height:100%;
+  overflow:auto; -webkit-overflow-scrolling:touch;
+}

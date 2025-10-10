@@ -1,0 +1,5 @@
+In Header.tsx, render the mobile menu overlay via a React portal to document.body so it’s not inside any transformed parent.
+Add a menu-open body class while open to show a solid fixed underlay (body.menu-open::before{position:fixed;inset:0;background:#0c0c0c;z-index:2147483646}) that prevents Safari’s translucent bottom bar from sampling the page behind.
+Style .nav-bar-menu as position:fixed; inset:0; z-index:2147483647; background:#0c0c0c; with safe-area padding; keep the SVG mask position:absolute; inset:0; width:100%; height:100%.
+Replace any vh/svh with inset:0.
+Add an iOS 26 visualViewport sizing shim that sets left/top/width/height on .nav-bar-menu on visualViewport.resize/scroll.
