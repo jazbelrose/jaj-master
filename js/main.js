@@ -1,0 +1,516 @@
+/* ===================================================================
+ * JAJ - Main JS
+ *
+ * ------------------------------------------------------------------- */
+
+(function($) {
+
+    "use strict";
+    
+    var cfg = {
+        scrollDuration : 800, // smoothscroll duration
+        mailChimpURL   : 'https://facebook.us8.list-manage.com/subscribe/post?u=cdb7b577e41181934ed6a6a44&amp;id=e6957d85dc'   // mailchimp url
+    },
+
+    $WIN = $(window);
+
+    // Add the User Agent to the <html>
+    // will be used for IE10 detection (Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0))
+    var doc = document.documentElement;
+    doc.setAttribute('data-useragent', navigator.userAgent);
+
+
+   /* Preloader
+    * -------------------------------------------------- */
+   var clPreloader = function() {
+
+    $("html").addClass('cl-preload');
+    
+    // Lock scroll during preloader
+    if (window.scrollLock) {
+        window.scrollLock.lock();
+    }
+
+    $WIN.on('load', function() {
+
+        // Assuming the logo animation lasts 3 seconds
+        // Adjust the timeout to match your GSAP animation duration
+        setTimeout(function() {
+            // Fade out the loading animation (logo)
+            $("#loader").fadeOut("slow", function() {
+                // Fade out the preloader div after the loader fades
+                $("#preloader").delay(300).fadeOut("slow", function() {
+                    // Unlock scroll after preloader completely fades out
+                    if (window.scrollLock) {
+                        window.scrollLock.unlock();
+                    }
+                });
+            });
+
+            // Remove preload class and add loaded class
+            $("html").removeClass('cl-preload');
+            $("html").addClass('cl-loaded');
+        }, 500); // Match this to the length of your GSAP logo animation
+    });
+};
+
+
+   /* Menu on Scrolldown
+    * ------------------------------------------------------ */
+    var clMenuOnScrolldown = function() {
+        
+        var menuTrigger = $('.header-menu-toggle');
+
+        $WIN.on('scroll', function() {
+
+            if ($WIN.scrollTop() > 150) {
+                menuTrigger.addClass('opaque');
+            }
+            else {
+                menuTrigger.removeClass('opaque');
+            }
+
+        });
+    };
+
+
+   /* OffCanvas Menu
+    * ------------------------------------------------------ */
+    var clOffCanvas = function() {
+
+        var menuTrigger     = $('.header-menu-toggle'),
+            nav             = $('.header-nav'),
+            closeButton     = nav.find('.header-nav__close'),
+            siteBody        = $('body'),
+            mainContents    = $('section, footer');
+
+        // Helper function to open menu
+        function openMenu() {
+            siteBody.addClass('menu-is-open globalnav-overlay-open');
+            if (window.scrollLock) {
+                window.scrollLock.lock();
+            }
+        }
+
+        // Helper function to close menu
+        function closeMenu() {
+            siteBody.removeClass('menu-is-open globalnav-overlay-open');
+            if (window.scrollLock) {
+                window.scrollLock.unlock();
+            }
+        }
+
+        // open-close menu by clicking on the menu icon
+        menuTrigger.on('click', function(e){
+            e.preventDefault();
+            
+            var isOpen = siteBody.hasClass('menu-is-open');
+            
+            if (!isOpen) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        });
+
+        // close menu by clicking the close button
+        closeButton.on('click', function(e){
+            e.preventDefault();
+            closeMenu();
+        });
+
+        // close menu clicking outside the menu itself
+        siteBody.on('click', function(e){
+            if( !$(e.target).is('.header-nav, .header-nav__content, .header-menu-toggle, .header-menu-toggle span') ) {
+                if (siteBody.hasClass('menu-is-open')) {
+                    closeMenu();
+                }
+            }
+        });
+
+        // Close menu on escape key
+        $(document).on('keydown', function(e) {
+            if (e.keyCode === 27 && siteBody.hasClass('menu-is-open')) { // ESC key
+                closeMenu();
+            }
+        });
+
+    };
+
+
+   /* photoswipe
+    * ----------------------------------------------------- */
+    var clPhotoswipe = function() {
+        var items = [],
+            $pswp = $('.pswp')[0],
+            $folioItems = $('.item-folio');
+
+            // get items
+            $folioItems.each( function(i) {
+
+                var $folio = $(this),
+                    $thumbLink =  $folio.find('.thumb-link'),
+                    $title = $folio.find('.item-folio__title'),
+                    $caption = $folio.find('.item-folio__caption'),
+                    $titleText = '<h4>' + $.trim($title.html()) + '</h4>',
+                    $captionText = $.trim($caption.html()),
+                    $href = $thumbLink.attr('href'),
+                    $size = $thumbLink.data('size').split('x'),
+                    $width  = $size[0],
+                    $height = $size[1];
+         
+                var item = {
+                    src  : $href,
+                    w    : $width,
+                    h    : $height
+                }
+
+                if ($caption.length > 0) {
+                    item.title = $.trim($titleText + $captionText);
+                }
+
+                items.push(item);
+            });
+
+            // bind click event
+            $folioItems.each(function(i) {
+
+                $(this).on('click', function(e) {
+                    e.preventDefault();
+                    var options = {
+                        index: i,
+                        showHideOpacity: true
+                    }
+
+                    // initialize PhotoSwipe
+                    var lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, items, options);
+                    lightBox.init();
+                });
+
+            });
+
+    };
+    
+
+   /* Stat Counter
+    * ------------------------------------------------------ */
+    var clStatCount = function() {
+        
+        var statSection = $(".about-stats"),
+            stats = $(".stats__count");
+
+        statSection.waypoint({
+
+            handler: function(direction) {
+
+                if (direction === "down") {
+
+                    stats.each(function () {
+                        var $this = $(this);
+
+                        $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+                            duration: 4000,
+                            easing: 'swing',
+                            step: function (curValue) {
+                                $this.text(Math.ceil(curValue));
+                            }
+                        });
+                    });
+
+                } 
+
+                // trigger once only
+                this.destroy();
+
+            },
+
+            offset: "90%"
+
+        });
+    };
+
+
+   /* Masonry
+    * ---------------------------------------------------- */ 
+    var clMasonryFolio = function () {
+        
+        var containerBricks = $('.masonry');
+
+        containerBricks.imagesLoaded(function () {
+            containerBricks.masonry({
+                itemSelector: '.masonry__brick',
+                resize: true
+            });
+        });
+    };
+
+
+   /* slick slider
+    * ------------------------------------------------------ */
+    var clSlickSlider = function() {
+
+        $('.clients').slick({
+            arrows: false,
+            dots: true,
+            infinite: true,
+            slidesToShow: 6,
+            slidesToScroll: 2,
+            //autoplay: true,
+            pauseOnFocus: false,
+            autoplaySpeed: 1000,
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 5
+                    }
+                },
+                {
+                    breakpoint: 1000,
+                    settings: {
+                        slidesToShow: 4
+                    }
+                },
+                {
+                    breakpoint: 800,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }
+
+            ]
+        });
+
+        $('.testimonials').slick({
+            arrows: true,
+            dots: false,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+            pauseOnFocus: false,
+            autoplaySpeed: 1500,
+            responsive: [
+                {
+                    breakpoint: 900,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 800,
+                    settings: {
+                        arrows: false,
+                        dots: true
+                    }
+                }
+            ]
+        });
+    
+    };
+
+   /* Smooth Scrolling
+    * ------------------------------------------------------ */
+    
+   
+   
+   
+   
+   var clSmoothScroll = function() {
+        
+        $('.smoothscroll').on('click', function (e) {
+            var target = this.hash,
+            $target    = $(target);
+            
+                e.preventDefault();
+                e.stopPropagation();
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, cfg.scrollDuration, 'swing').promise().done(function () {
+
+                // check if menu is open
+                if ($('body').hasClass('menu-is-open')) {
+                    $('.header-menu-toggle').trigger('click');
+                }
+
+                window.location.hash = target;
+            });
+        });
+
+    };
+
+
+   /* Placeholder Plugin Settings
+    * ------------------------------------------------------ */
+    var clPlaceholder = function() {
+        $('input, textarea, select').placeholder();  
+    };
+
+
+   /* Alert Boxes
+    * ------------------------------------------------------ */
+    var clAlertBoxes = function() {
+
+        $('.alert-box').on('click', '.alert-box__close', function() {
+            $(this).parent().fadeOut(500);
+        }); 
+
+    };
+
+
+   /* Contact Form
+    * ------------------------------------------------------ */
+/* Contact Form
+ * ------------------------------------------------------ */
+var clContactForm = function() {
+    $('#contactForm').validate({
+        submitHandler: function(form) {
+            var submitButton = $('#contactForm button[type="submit"]');
+            var buttonText = submitButton.find('.button-text');
+            var loadingDots = submitButton.find('.loading-dots');
+
+            var originalButtonText = buttonText.text(); // Save original button text
+
+            // AJAX submission
+            $.ajax({
+                type: "POST",
+                url: "https://bfedz5f0ji.execute-api.us-west-1.amazonaws.com/default/JensenAndJuhlContact",
+                data: JSON.stringify({
+                    name: $('#contactName').val(),
+                    email: $('#contactEmail').val(),
+                    subject: $('#contactSubject').val(),
+                    message: $('#contactMessage').val(),
+                }),
+                contentType: 'application/json',
+                beforeSend: function() {
+                    // Show spinner and hide button text
+                    buttonText.hide();
+                    loadingDots.show();
+                    submitButton.prop('disabled', true);
+                },
+                success: function(msg) {
+                    // Success feedback
+                    buttonText.text('Message Sent!').show();
+                    loadingDots.hide();
+
+                    // Reset the form
+                    $('#contactForm')[0].reset();
+
+                    // Reset the button after 5 seconds
+                    setTimeout(() => {
+                        buttonText.text(originalButtonText).show();
+                        submitButton.prop('disabled', false);
+                    }, 5000);
+                },
+                error: function() {
+                    // Error feedback
+                    buttonText.text('Error! Try Again.').show();
+                    loadingDots.hide();
+
+                    // Reset the button after 5 seconds
+                    setTimeout(() => {
+                        buttonText.text(originalButtonText).show();
+                        submitButton.prop('disabled', false);
+                    }, 5000);
+                }
+            });
+        }
+    });
+};
+
+
+
+   /* Animate On Scroll
+    * ------------------------------------------------------ */
+    var clAOS = function() {
+        
+        AOS.init({
+            offset: 200,
+            duration: 600,
+            easing: 'ease-in-sine',
+            delay: 300,
+            once: true,
+            //   
+        });
+        
+
+    };
+
+
+
+
+   /* Back to Top
+    * ------------------------------------------------------ */
+    var clBackToTop = function() {
+        
+        var pxShow  = 500,         // height on which the button will show
+        fadeInTime  = 400,         // how slow/fast you want the button to show
+        fadeOutTime = 400,         // how slow/fast you want the button to hide
+        scrollSpeed = 300,         // how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'
+        goTopButton = $(".go-top")
+        
+        // Show or hide the sticky footer button
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() >= pxShow) {
+                goTopButton.fadeIn(fadeInTime);
+            } else {
+                goTopButton.fadeOut(fadeOutTime);
+            }
+        });
+    };
+
+
+    /* Initialize
+     * ------------------------------------------------------ */
+    (function ssInit() {
+        
+        clPreloader();
+        clMenuOnScrolldown();
+        clOffCanvas();
+        clPhotoswipe();
+        clStatCount();
+        clMasonryFolio();
+        clSlickSlider();
+        clSmoothScroll();
+        clPlaceholder();
+        clAlertBoxes();
+        clContactForm();
+        clAOS();
+       
+        clBackToTop();
+
+        
+        $(window).on('load', function() {
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.refresh();
+            }
+
+            // Dynamically update the copyright year after load
+            const yearSpan = document.getElementById("current-year");
+            if (yearSpan) {
+                const currentYear = new Date().getFullYear();
+                yearSpan.textContent = currentYear;
+            }
+        });
+
+    })();
+
+})(jQuery);
+
+// Dynamically update the copyright year
+document.addEventListener("DOMContentLoaded", function() {
+    const yearSpan = document.getElementById("current-year");
+    const currentYear = new Date().getFullYear(); // Get the current year
+    yearSpan.textContent = currentYear; // Insert the year into the span
+  });
+  

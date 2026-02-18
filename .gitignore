@@ -1,0 +1,12 @@
+# Python-related
+__pycache__/
+*.py[cod]
+*.log
+
+# OS-related
+.DS_Store
+
+# Other
+env/
+*.swp
+
