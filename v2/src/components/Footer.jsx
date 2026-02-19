@@ -36,7 +36,7 @@ export default function Footer() {
         <div className="footer-desc">
           <p>
             At Jensen & Juhl, we're committed to transforming ideas into impactful realities.
-            Through XCTN, Drapery Society, and Memry, our integrated approach creates
+            Through XCTN, Drapery Society, and memry, our integrated approach creates
             memorable experiences that connect brands with their audiences.
             Let's build the future together.
           </p>

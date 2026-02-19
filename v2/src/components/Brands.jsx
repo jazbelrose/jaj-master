@@ -12,10 +12,10 @@ const brands = [
       'Where fabric becomes architecture. Textile installations, event drapery, custom apparel, and material design that transforms spaces. A dedicated brand for the culture of craft — without the limitations of being "just production."',
   },
   {
-    name: 'Memry',
+    name: 'memry',
     tagline: 'Software Brain',
     description:
-      'The intelligence layer. Digital tools, visualization systems, and software that powers how we plan, design, and deliver. Memry turns institutional knowledge into a competitive advantage.',
+      'The intelligence layer. Digital tools, visualization systems, and software that powers how we plan, design, and deliver. memry turns institutional knowledge into a competitive advantage.',
   },
 ]
 

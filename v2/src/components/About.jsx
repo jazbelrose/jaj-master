@@ -35,7 +35,7 @@ export default function About() {
           <p>
             A Los Angeles-based creative production group built around a simple belief:
             the best work happens when design, craft, and execution exist under one roof.
-            Through our focused brands — XCTN, Drapery Society, and Memry — we deliver
+            Through our focused brands — XCTN, Drapery Society, and memry — we deliver
             architecture-premium experiences from concept to completion.
           </p>
         </div>
