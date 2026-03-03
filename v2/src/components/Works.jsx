@@ -5,28 +5,28 @@ const projects = [
     category: 'Scenic Design',
     company: 'XCTN',
     image: 'https://d2qb21tb4meex0.cloudfront.net/XCTN/projects/private-estate-gala-bel-air/hero.jpg',
-    link: 'https://xctnproduction.com/projects/private-estate-gala-bel-air',
+    link: 'https://xctnproduction.com/work/private-estate-gala-bel-air',
   },
   {
     title: 'Runway Environment — Fashion Week',
     category: 'Scenic Design',
     company: 'XCTN',
     image: 'https://d2qb21tb4meex0.cloudfront.net/XCTN/projects/runway-environment-nyfw/hero.jpg',
-    link: 'https://xctnproduction.com/projects/runway-environment-nyfw',
+    link: 'https://xctnproduction.com/work/runway-environment-nyfw',
   },
   {
     title: 'Brand Pavilion — Art Basel Miami',
     category: 'Spatial Environments',
     company: 'XCTN',
     image: 'https://d2qb21tb4meex0.cloudfront.net/XCTN/projects/brand-pavilion-art-basel/hero.jpg',
-    link: 'https://xctnproduction.com/projects/brand-pavilion-art-basel',
+    link: 'https://xctnproduction.com/work/brand-pavilion-art-basel',
   },
   {
     title: 'Award Ceremony — Stage Scenic',
     category: 'Scenic Design',
     company: 'XCTN',
     image: 'https://d2qb21tb4meex0.cloudfront.net/XCTN/projects/award-ceremony-stage-scenic/hero.jpg',
-    link: 'https://xctnproduction.com/projects/award-ceremony-stage-scenic',
+    link: 'https://xctnproduction.com/work/award-ceremony-stage-scenic',
   },
   // Drapery Society
   {
