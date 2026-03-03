@@ -3,9 +3,8 @@ import { useState, useEffect, useCallback } from 'react'
 const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
-  { label: 'Our Brands', href: '#brands' },
-  { label: 'Works', href: '#works' },
-  { label: 'Clients', href: '#clients' },
+  { label: 'Our Companies', href: '#brands' },
+  { label: 'Portfolio', href: '#works' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -66,27 +65,9 @@ export default function Header() {
           </ul>
 
           <p>
-            At Jensen & Juhl, we turn your creative vision into reality.
-            Let's build something extraordinary together.
+            Jensen & Juhl is a vertically integrated holding company
+            operating across design, fabrication, and experiential environments.
           </p>
-
-          <ul className="header-nav__social">
-            <li>
-              <a href="https://mylg.studio/" target="_blank" rel="noopener noreferrer">
-                <img src="/images/mylg-icon.svg" alt="MYLG" />
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/jensenandjuhl.com" target="_blank" rel="noopener noreferrer">
-                <img src="/images/bluesky-icon.svg" alt="BlueSky" />
-              </a>
-            </li>
-            <li>
-              <a href="https://dribbble.com/jensenandjuhl" target="_blank" rel="noopener noreferrer">
-                <img src="/images/dribble-bold.svg" alt="Dribbble" />
-              </a>
-            </li>
-          </ul>
         </div>
       </nav>
 

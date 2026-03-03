@@ -1,30 +1,4 @@
-import { useState } from 'react'
-
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [subStatus, setSubStatus] = useState('')
-
-  const handleSubscribe = async (e) => {
-    e.preventDefault()
-    try {
-      const res = await fetch('https://formspree.io/f/movqzled', {
-        method: 'POST',
-        body: new FormData(e.target),
-        headers: { Accept: 'application/json' },
-      })
-      if (res.ok) {
-        setSubStatus('success')
-        setEmail('')
-        setTimeout(() => setSubStatus(''), 5000)
-      } else {
-        throw new Error()
-      }
-    } catch {
-      setSubStatus('error')
-      setTimeout(() => setSubStatus(''), 5000)
-    }
-  }
-
   const scrollToTop = (e) => {
     e.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -32,57 +6,31 @@ export default function Footer() {
 
   return (
     <footer>
-      <div className="row footer-main">
-        <div className="footer-desc">
+      <div className="footer-grid">
+        <div className="footer-grid__desc">
           <p>
-            At Jensen & Juhl, we're committed to transforming ideas into impactful realities.
-            Through XCTN, Drapery Society, and memry, our integrated approach creates
-            memorable experiences that connect brands with their audiences.
-            Let's build the future together.
+            Jensen & Juhl is a vertically integrated holding company operating
+            across drapery fabrication, scenic production, and experiential environments.
+            Through XCTN, Drapery Society, and memry, we deliver design-driven execution
+            from concept to completion.
           </p>
         </div>
 
-        <div className="footer-subscribe">
-          <h4>Stay Updated</h4>
-          <p>
-            Subscribe to our newsletter to receive the latest insights, project highlights,
-            and updates from the Jensen & Juhl Group.
-          </p>
-
-          <form className="subscribe-form" onSubmit={handleSubscribe}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input type="submit" value="Subscribe" />
-          </form>
-
-          {subStatus === 'success' && (
-            <p style={{ color: '#4CAF50', marginTop: '1rem', fontSize: '1.4rem' }}>
-              Thank you for subscribing!
-            </p>
-          )}
-          {subStatus === 'error' && (
-            <p style={{ color: '#e65153', marginTop: '1rem', fontSize: '1.4rem' }}>
-              Subscription failed. Please try again.
-            </p>
-          )}
+        <div className="footer-grid__links">
+          <h4>Our Companies</h4>
+          <ul>
+            <li><a href="https://xctnproduction.com" target="_blank" rel="noopener noreferrer">XCTN</a></li>
+            <li><a href="https://draperysociety.com" target="_blank" rel="noopener noreferrer">Drapery Society</a></li>
+            <li><a href="mailto:info@jensenandjuhl.com">memry</a></li>
+          </ul>
         </div>
       </div>
 
-      <div className="row footer-bottom">
-        <div className="copyright">
-          <span>&copy; {new Date().getFullYear()} Jensen & Juhl Group. All rights reserved.</span>
-        </div>
-        <div className="go-top">
-          <a href="#top" onClick={scrollToTop} aria-label="Back to top">
-            &#8593;
-          </a>
-        </div>
+      <div className="footer-grid__bottom">
+        <span>&copy; {new Date().getFullYear()} Jensen & Juhl Group. All rights reserved.</span>
+        <a href="#top" className="go-top__link" onClick={scrollToTop} aria-label="Back to top">
+          &#8593;
+        </a>
       </div>
     </footer>
   )

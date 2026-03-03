@@ -7,7 +7,6 @@ import About from './components/About'
 import ParallaxBreak from './components/ParallaxBreak'
 import Brands from './components/Brands'
 import Works from './components/Works'
-import Clients from './components/Clients'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -30,7 +29,6 @@ function App() {
       <ParallaxBreak />
       <Brands />
       <Works />
-      <Clients />
       <Contact />
       <Footer />
     </>

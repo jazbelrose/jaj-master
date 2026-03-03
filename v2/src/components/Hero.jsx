@@ -35,18 +35,21 @@ export default function Hero() {
 
       <div className="home-content">
         <div className="row home-content__main">
-          <h3>Welcome to Jensen and Juhl</h3>
+          <h3>Jensen & Juhl</h3>
           <h1>
-            Design & Production that Inspires <br />
-            Exceptional Experiences
+            Design-Driven <br />
+            Execution at Scale
           </h1>
+          <p className="home-content__lead">
+            We build and operate companies that transform how spaces perform.
+          </p>
 
           <div className="home-content__buttons">
             <a href="#contact" className="btn btn--stroke" onClick={(e) => smoothScroll(e, '#contact')}>
-              Work Together
+              Get in Touch
             </a>
             <a href="#about" className="btn btn--stroke" onClick={(e) => smoothScroll(e, '#about')}>
-              More About Us
+              Learn More
             </a>
           </div>
 
@@ -74,27 +77,6 @@ export default function Hero() {
           </a>
         </div>
       </div>
-
-      <ul className="home-social">
-        <li>
-          <a href="https://mylg.studio/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/mylg-icon-white.svg" alt="MYLG" style={{width: 33, height: 33}} />
-            <span>*MYLG!*</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://bsky.app/profile/jensenandjuhl.com/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/bluesky-icon-white.svg" alt="BlueSky" style={{width: 33, height: 33}} />
-            <span>BlueSky</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://dribbble.com/jensenandjuhl" target="_blank" rel="noopener noreferrer">
-            <i className="fa fa-dribbble" aria-hidden="true"></i>
-            <span>Dribbble</span>
-          </a>
-        </li>
-      </ul>
     </section>
   )
 }

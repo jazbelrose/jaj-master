@@ -46,17 +46,15 @@ export default function Contact() {
 
       <div className="row section-header" data-aos="fade-up">
         <div className="col-full">
-          <h3 className="subhead">Contact Us</h3>
+          <h3 className="subhead">Contact</h3>
           <h1 className="display-2 display-2--light">
-            Connect With Us for Strategic Partnerships and Tailored Solutions
+            For partnership inquiries, investment opportunities, or operational discussions
           </h1>
         </div>
       </div>
 
-      <div className="row contact-content" data-aos="fade-up">
-        <div className="contact-primary">
-          <h3 className="h6">Send Us A Message</h3>
-
+      <div className="contact-grid" data-aos="fade-up">
+        <div className="contact-grid__form">
           <form onSubmit={handleSubmit} noValidate>
             <fieldset>
               <div className="form-field">
@@ -68,7 +66,6 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   minLength={2}
-                  style={{ width: '100%' }}
                 />
               </div>
               <div className="form-field">
@@ -79,7 +76,6 @@ export default function Contact() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  style={{ width: '100%' }}
                 />
               </div>
               <div className="form-field">
@@ -89,18 +85,16 @@ export default function Contact() {
                   placeholder="Subject"
                   value={form.subject}
                   onChange={handleChange}
-                  style={{ width: '100%' }}
                 />
               </div>
               <div className="form-field">
                 <textarea
                   name="message"
                   placeholder="Your Message"
-                  rows="10"
+                  rows="8"
                   value={form.message}
                   onChange={handleChange}
                   required
-                  style={{ width: '100%' }}
                 ></textarea>
               </div>
               <div className="form-field">
@@ -128,52 +122,22 @@ export default function Contact() {
           </form>
         </div>
 
-        <div className="contact-secondary">
-          <div className="contact-info">
-            <h3 className="h6">Contact Info</h3>
+        <div className="contact-grid__info">
+          <div className="cinfo">
+            <h5>Where to Find Us</h5>
+            <p>
+              400 S Broadway<br />
+              Los Angeles, CA<br />
+              90013 US
+            </p>
+          </div>
 
-            <div className="cinfo">
-              <h5>Where to Find Us</h5>
-              <p>
-                400 S Broadway<br />
-                Los Angeles, CA<br />
-                90013 US
-              </p>
-            </div>
-
-            <div className="cinfo">
-              <h5>Email Us At</h5>
-              <p>
-                <a href="mailto:info@jensenandjuhl.com">info@jensenandjuhl.com</a><br />
-                <a href="mailto:partnerships@jensenandjuhl.com">partnerships@jensenandjuhl.com</a>
-              </p>
-            </div>
-
-            <div className="cinfo">
-              <h5>Call Us At</h5>
-              <p>
-                Phone: <a href="tel:+13100024217">+1 310.002.4217</a><br />
-                Mobile: <a href="tel:+19497018836">+1 949.701.8836</a>
-              </p>
-            </div>
-
-            <ul className="contact-social">
-              <li>
-                <a href="https://mylg.studio/" target="_blank" rel="noopener noreferrer">
-                  <img src="/images/mylg-icon-white.svg" alt="MYLG" />
-                </a>
-              </li>
-              <li>
-                <a href="https://bsky.app/profile/jensenandjuhl.com/" target="_blank" rel="noopener noreferrer">
-                  <img src="/images/bluesky-icon-white.svg" alt="BlueSky" />
-                </a>
-              </li>
-              <li>
-                <a href="https://dribbble.com/jensenandjuhl" target="_blank" rel="noopener noreferrer">
-                  <img src="/images/dribble-bold-white.svg" alt="Dribbble" />
-                </a>
-              </li>
-            </ul>
+          <div className="cinfo">
+            <h5>Email Us At</h5>
+            <p>
+              <a href="mailto:info@jensenandjuhl.com">info@jensenandjuhl.com</a><br />
+              <a href="mailto:partnerships@jensenandjuhl.com">partnerships@jensenandjuhl.com</a>
+            </p>
           </div>
         </div>
       </div>
