@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  // `website` is a honeypot -- hidden from humans, bots fill it
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', website: '' })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [startedAt] = useState(() => Date.now())
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -14,22 +16,25 @@ export default function Contact() {
 
     try {
       const res = await fetch(
-        'https://bfedz5f0ji.execute-api.us-west-1.amazonaws.com/default/JensenAndJuhlContact',
+        'https://qmyknhvflk.execute-api.us-west-2.amazonaws.com/',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            site: 'jensenandjuhl.com',
             name: form.name,
             email: form.email,
-            subject: form.subject,
             message: form.message,
+            website: form.website,
+            elapsedMs: Date.now() - startedAt,
+            fields: { Subject: form.subject },
           }),
         }
       )
 
       if (res.ok) {
         setStatus('success')
-        setForm({ name: '', email: '', subject: '', message: '' })
+        setForm({ name: '', email: '', subject: '', message: '', website: '' })
         setTimeout(() => setStatus('idle'), 5000)
       } else {
         throw new Error('Failed')
@@ -63,6 +68,15 @@ export default function Contact() {
           does nothing here because .s-contact fixes the height. */}
       <div className="row" data-aos="fade-up">
         <form className="cform" onSubmit={handleSubmit} noValidate>
+          {/* Honeypot -- offscreen, humans never see or tab into it */}
+          <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
+            <label htmlFor="c-website">Website</label>
+            <input
+              id="c-website" name="website" type="text"
+              tabIndex={-1} autoComplete="off"
+              value={form.website} onChange={handleChange}
+            />
+          </div>
           <div className="cform__pair">
             <div className="cform__field">
               <label htmlFor="c-name">Name</label>
