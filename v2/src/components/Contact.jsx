@@ -67,14 +67,14 @@ export default function Contact() {
             <div className="cform__field">
               <label htmlFor="c-name">Name</label>
               <input
-                id="c-name" name="name" type="text" placeholder="Your name"
+                id="c-name" name="name" type="text"
                 value={form.name} onChange={handleChange} required minLength={2}
               />
             </div>
             <div className="cform__field">
               <label htmlFor="c-email">Email</label>
               <input
-                id="c-email" name="email" type="email" placeholder="name@company.com"
+                id="c-email" name="email" type="email"
                 value={form.email} onChange={handleChange} required
               />
             </div>
@@ -83,7 +83,7 @@ export default function Contact() {
           <div className="cform__field">
             <label htmlFor="c-subject">Subject</label>
             <input
-              id="c-subject" name="subject" type="text" placeholder="What this is about"
+              id="c-subject" name="subject" type="text"
               value={form.subject} onChange={handleChange}
             />
           </div>
@@ -91,7 +91,7 @@ export default function Contact() {
           <div className="cform__field">
             <label htmlFor="c-message">Message</label>
             <textarea
-              id="c-message" name="message" placeholder="What the work is, where it happens, and when."
+              id="c-message" name="message"
               value={form.message} onChange={handleChange} required
             ></textarea>
           </div>
