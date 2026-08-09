@@ -40,6 +40,11 @@ export default function Contact() {
     }
   }
 
+  const buttonLabel =
+    status === 'sending' ? 'Sending' :
+    status === 'success' ? 'Message sent' :
+    status === 'error' ? 'Try again' : 'Send'
+
   return (
     <section id="contact" className="s-contact">
       <div className="overlay"></div>
@@ -53,93 +58,50 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="contact-grid" data-aos="fade-up">
-        <div className="contact-grid__form">
-          <form onSubmit={handleSubmit} noValidate>
-            <fieldset>
-              <div className="form-field">
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="Your Name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  minLength={2}
-                />
-              </div>
-              <div className="form-field">
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Your Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="form-field">
-                <input
-                  name="subject"
-                  type="text"
-                  placeholder="Subject"
-                  value={form.subject}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-field">
-                <textarea
-                  name="message"
-                  placeholder="Your Message"
-                  rows="8"
-                  value={form.message}
-                  onChange={handleChange}
-                  required
-                ></textarea>
-              </div>
-              <div className="form-field">
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  disabled={status === 'sending'}
-                >
-                  {status === 'sending' ? (
-                    <span className="loading-dots">
-                      <span className="dot"></span>
-                      <span className="dot"></span>
-                      <span className="dot"></span>
-                    </span>
-                  ) : status === 'success' ? (
-                    'Message Sent!'
-                  ) : status === 'error' ? (
-                    'Error! Try Again.'
-                  ) : (
-                    'Submit'
-                  )}
-                </button>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-
-        <div className="contact-grid__info">
-          <div className="cinfo">
-            <h5>Where to Find Us</h5>
-            <p>
-              400 S Broadway<br />
-              Los Angeles, CA<br />
-              90013 US
-            </p>
+      {/* Labelled fields, name and email paired on one row so the form is three rows
+          rather than five. Every height is set in CSS -- the textarea `rows` attribute
+          does nothing here because .s-contact fixes the height. */}
+      <div className="row" data-aos="fade-up">
+        <form className="cform" onSubmit={handleSubmit} noValidate>
+          <div className="cform__pair">
+            <div className="cform__field">
+              <label htmlFor="c-name">Name</label>
+              <input
+                id="c-name" name="name" type="text" placeholder="Your name"
+                value={form.name} onChange={handleChange} required minLength={2}
+              />
+            </div>
+            <div className="cform__field">
+              <label htmlFor="c-email">Email</label>
+              <input
+                id="c-email" name="email" type="email" placeholder="name@company.com"
+                value={form.email} onChange={handleChange} required
+              />
+            </div>
           </div>
 
-          <div className="cinfo">
-            <h5>Email Us At</h5>
-            <p>
-              <a href="mailto:info@jensenandjuhl.com">info@jensenandjuhl.com</a><br />
-              <a href="mailto:partnerships@jensenandjuhl.com">partnerships@jensenandjuhl.com</a>
-            </p>
+          <div className="cform__field">
+            <label htmlFor="c-subject">Subject</label>
+            <input
+              id="c-subject" name="subject" type="text" placeholder="What this is about"
+              value={form.subject} onChange={handleChange}
+            />
           </div>
-        </div>
+
+          <div className="cform__field">
+            <label htmlFor="c-message">Message</label>
+            <textarea
+              id="c-message" name="message" placeholder="What the work is, where it happens, and when."
+              value={form.message} onChange={handleChange} required
+            ></textarea>
+          </div>
+
+          <div className="cform__end">
+            <button type="submit" className="submit-btn" disabled={status === 'sending'}>
+              {buttonLabel}
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   )

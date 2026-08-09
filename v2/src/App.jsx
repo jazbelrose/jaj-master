@@ -6,7 +6,6 @@ import Hero from './components/Hero'
 import About from './components/About'
 import ParallaxBreak from './components/ParallaxBreak'
 import Brands from './components/Brands'
-import Works from './components/Works'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -28,7 +27,6 @@ function App() {
       <About />
       <ParallaxBreak />
       <Brands />
-      <Works />
       <Contact />
       <Footer />
     </>

@@ -4,7 +4,6 @@ const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
   { label: 'Our Companies', href: '#brands' },
-  { label: 'Portfolio', href: '#works' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -65,8 +64,8 @@ export default function Header() {
           </ul>
 
           <p>
-            Jensen & Juhl is a vertically integrated holding company
-            operating across design, fabrication, and experiential environments.
+            Jensen &amp; Juhl is a vertically integrated holding company operating across
+            drapery fabrication, scenic production, experiential environments, and the agentic brain we built to run them.
           </p>
         </div>
       </nav>
@@ -76,9 +75,8 @@ export default function Header() {
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle menu"
       >
-        <span className="header-menu-content">
-          <span className="header-menu-text">Menu</span>
-          <span className="header-menu-icon"></span>
+        <span className="header-menu-bars" aria-hidden="true">
+          <i></i><i></i><i></i>
         </span>
       </button>
     </header>

@@ -3,6 +3,13 @@
  * Migrated from static site, adapted for React/Vite
  * ------------------------------------------------------------------- */
 
+/* memry's own brand face, for the memry wordmark in Our Companies */
+@font-face {
+  font-family: "Helvetica Display";
+  src: url("https://d3kix94vejprx7.cloudfront.net/public/fonts/Helvetica-Display.woff2") format("woff2");
+  font-display: swap;
+}
+
 /* ===================================================================
  * # CSS Custom Properties
  * ------------------------------------------------------------------- */
@@ -73,8 +80,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-black);
   font-weight: normal;
-  text-rendering: optimizeLegibility;
-  letter-spacing: -0.1rem;
+  letter-spacing: -0.02em;
+}
+
+/* AOS settles every revealed element on transform: translateZ(0), which keeps it on its
+   own GPU layer forever. Composited text drops ClearType subpixel antialiasing and renders
+   grainy. Releasing the layer once the reveal is done puts the text back on the normal
+   rasteriser. */
+[data-aos^="fade"][data-aos^="fade"].aos-animate {
+  transform: none;
 }
 
 h1, h2, h3, h4 {
@@ -455,68 +469,48 @@ select:focus {
 /* Menu toggle */
 .header-menu-toggle {
   position: fixed;
-  right: 38px;
-  top: 24px;
-  height: 42px;
-  width: 42px;
-  line-height: 42px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  letter-spacing: .3rem;
-  color: white;
-  transition: all 0.5s ease-in-out;
-  cursor: pointer;
-  background: none;
-  border: none;
+  right: 34px;
+  top: 26px;
   z-index: 600;
-}
-
-.header-menu-toggle.opaque {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-}
-
-.header-menu-text {
   display: block;
-  position: absolute;
-  top: 0;
-  left: -70px;
-  width: 70px;
-  padding-left: 12px;
-  border-radius: 12px;
-  line-height: 42px;
+  padding: 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-white);
+  transition: background-color .35s ease;
 }
 
-.header-menu-toggle.opaque .header-menu-text {
-  background-color: rgba(0, 0, 0, 0.8);
+.header-menu-bars {
+  display: grid;
+  gap: 6px;
+  width: 28px;
 }
 
-.header-menu-icon {
+.header-menu-bars i {
   display: block;
-  width: 22px;
   height: 2px;
-  margin-top: -1px;
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  background-color: white;
-  transition: all 0.5s ease-in-out;
+  border-radius: 2px;
+  background-color: currentColor;
+  transition: transform .35s ease, opacity .25s ease, background-color .3s ease;
 }
 
-.header-menu-icon::before, .header-menu-icon::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  background-color: inherit;
-  position: absolute;
-  left: 0;
-  transition: all 0.5s ease-in-out;
+.header-menu-toggle:hover .header-menu-bars i,
+.header-menu-toggle:focus-visible .header-menu-bars i {
+  background-color: var(--color-gold);
 }
 
-.header-menu-icon::before { top: -9px; }
-.header-menu-icon::after { bottom: -9px; }
+/* open state: the bars become a close mark, so the control explains itself */
+.menu-is-open .header-menu-bars i:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-is-open .header-menu-bars i:nth-child(2) { opacity: 0; }
+.menu-is-open .header-menu-bars i:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* fixed over a page that alternates dark and light sections, so past the hero it
+   needs a minimal scrim to stay visible. */
+.header-menu-toggle.opaque {
+  background-color: rgba(10, 10, 10, .72);
+  backdrop-filter: blur(10px);
+}
 
 @media only screen and (max-width: 600px) {
   .s-header { height: 90px; }
@@ -525,7 +519,7 @@ select:focus {
 }
 
 @media only screen and (max-width: 400px) {
-  .header-menu-text { display: none; }
+  .header-menu-toggle { right: 22px; }
 }
 
 /* ===================================================================
@@ -825,8 +819,8 @@ select:focus {
   margin-top: 6rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 4rem;
-  max-width: 1100px;
+  gap: 5.6rem;
+  max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -839,22 +833,63 @@ a.brand-card {
 
 .brand-card {
   text-align: center;
-  padding: 4rem 3rem;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  transition: all 0.4s ease;
-}
-
-.brand-card:hover {
-  border-color: var(--color-gold);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  transform: translateY(-4px);
+  padding: 0 3.2rem;
 }
 
 .brand-card__icon {
   font-size: 4.8rem;
   color: var(--color-gold);
   margin-bottom: 2rem;
+}
+
+/* The three marks are different species: DS is a circle over a name, XCTN is a
+   wordmark alone, memry is a bare icon. Matching their heights is what made the
+   row look uneven. Instead they sit in one band, bottom-aligned, so "SOCIETY",
+   "XCTN" and "memry" all land on a single baseline. */
+.brand-card__band {
+  height: 9.6rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 2.8rem;
+}
+
+.brand-card__logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.brand-card__logo--drapery-society { height: 8.6rem; }
+
+/* XCTN has no mark above a name, so bottom-aligning stranded it low. Lifted so its
+   optical centre matches the DS circle (5.68rem above the band floor) and the memry
+   icon (6.17rem). At 3.2rem tall its floor lands at 5.9 - 1.6 = 4.3rem. */
+.brand-card__logo--xctn {
+  height: 3.2rem;
+  margin-bottom: 4.3rem;
+}
+
+/* memry mark matched to the DS circle: the circle is 67.9% of the DS lockup, so at
+   8.6rem it measures 5.84rem. */
+.brand-card__logo--memry { height: 5.84rem; }
+
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+}
+
+/* memry ships no wordmark, so its name is set in memry's own brand face. */
+.brand-lockup__word {
+  font-family: "Helvetica Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: .055em;
+  text-transform: lowercase;
+  color: var(--color-black);
 }
 
 .brand-card h3 {
@@ -880,6 +915,13 @@ a.brand-card {
   font-size: 1.5rem;
   line-height: 1.8;
   color: var(--color-gray);
+  max-width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+  /* centred copy of unequal length rags badly. balance evens the line lengths so the
+     three columns read as one row instead of three different shapes. */
+  text-wrap: balance;
+  hyphens: none;
 }
 
 @media only screen and (max-width: 900px) {
@@ -1044,7 +1086,7 @@ a.item-folio:hover { color: inherit; }
 .s-contact input[type="email"],
 .s-contact textarea {
   color: rgba(255, 255, 255, 0.6);
-  border-bottom-color: rgba(255, 255, 255, 0.15);
+  border-bottom-color: rgba(255, 255, 255, 0.28);
   width: 100%;
 }
 
@@ -1060,20 +1102,20 @@ a.item-folio:hover { color: inherit; }
 
 /* Submit button */
 .submit-btn {
-  width: 100%;
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: var(--color-white);
-  border-radius: 12px;
-  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  padding: 1.5rem 3.4rem;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--color-gold);
+  color: #111;
   font-family: var(--font-heading);
-  font-weight: 700;
   font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  letter-spacing: .3rem;
-  height: 5.4rem;
-  border: .2rem solid var(--color-gold);
-  transition: var(--transition);
+  cursor: pointer;
+  transition: background-color .3s ease;
 }
 
 .submit-btn:hover {
@@ -1113,20 +1155,102 @@ a.item-folio:hover { color: inherit; }
   .contact-grid { grid-template-columns: 1fr; }
 }
 
+.cform {
+  position: relative;
+  z-index: 2;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.cform__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.5rem;
+}
+
+.cform__field { margin-bottom: 3.4rem; }
+
+.cform__field label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.cform__field input,
+.cform__field textarea {
+  display: block;
+  width: 100%;
+  padding: .8rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .28);
+  background: none;
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  outline: none;
+  transition: border-color .3s ease;
+}
+
+.cform__field input::placeholder,
+.cform__field textarea::placeholder { color: rgba(255, 255, 255, .38); }
+
+.cform__field input:focus,
+.cform__field textarea:focus { border-bottom-color: var(--color-gold); }
+
+/* explicit height -- rows does nothing against the .s-contact textarea rule */
+.cform__field textarea {
+  min-height: 0;
+  height: 9rem;
+  line-height: 1.6;
+  resize: none;
+}
+
+.cform__end {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+
+.submit-btn:disabled { opacity: .55; cursor: default; }
+
+@media only screen and (max-width: 700px) {
+  .cform__pair { grid-template-columns: 1fr; gap: 0; }
+  .cform__end { justify-content: stretch; padding-top: 0; }
+  .cform__end .submit-btn { width: 100%; }
+}
+
 /* ===================================================================
  * # Footer
  * ------------------------------------------------------------------- */
 footer {
   background-color: #0a0a0a;
   color: rgba(255, 255, 255, 0.4);
-  padding-top: 9rem;
+  padding-top: 7rem;
 }
 
 /* Footer grid — matches .works-content / .contact-grid max-width */
+.footer-brand {
+  max-width: 1160px;
+  width: 94%;
+  margin: 0 auto 5rem;
+}
+
+.footer-brand img {
+  display: block;
+  width: auto;
+  height: 3.6rem;
+  opacity: .75;
+}
+
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5.6rem;
   max-width: 1160px;
   width: 94%;
   margin: 0 auto;
@@ -1138,12 +1262,19 @@ footer {
   color: rgba(255, 255, 255, 0.4);
 }
 
+.footer-grid__links {
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  padding-top: 2.2rem;
+}
+
 .footer-grid__links h4 {
   font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--color-white);
-  font-size: 1.8rem;
-  margin-top: 0;
+  font-size: 1.15rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: 0 0 1.8rem;
 }
 
 .footer-grid__links ul {
@@ -1153,7 +1284,8 @@ footer {
 }
 
 .footer-grid__links ul li {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+  line-height: 2.8rem;
 }
 
 .footer-grid__links ul li a {
@@ -1166,6 +1298,15 @@ footer {
 .footer-grid__links ul li a:hover {
   color: var(--color-gold);
 }
+
+.footer-grid__address {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  line-height: 2.8rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-grid__bottom { gap: 2rem; }
 
 .footer-grid__bottom {
   max-width: 1160px;
@@ -1181,25 +1322,28 @@ footer {
 }
 
 .go-top__link {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  background: var(--color-gold);
-  color: var(--color-white);
-  border-radius: 50%;
-  font-size: 1.4rem;
-  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, .22);
+  color: rgba(255, 255, 255, .6);
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  line-height: 1;
+  transition: border-color .3s ease, color .3s ease, background-color .3s ease;
 }
 
 .go-top__link:hover {
-  background: var(--color-gold-dark);
-  color: var(--color-white);
+  border-color: var(--color-gold);
+  background-color: var(--color-gold);
+  color: #111;
 }
 
-@media only screen and (max-width: 800px) {
-  .footer-grid { grid-template-columns: 1fr; }
+@media only screen and (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 3.2rem; }
 }
 
 /* ===================================================================

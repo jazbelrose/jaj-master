@@ -1,102 +1,54 @@
-import { useState, useEffect, useCallback } from 'react'
-
+// Selected clients -- logo strip only.
+//
+// This is deliberately NOT a portfolio. Marks only, no project names, no links into
+// draperysociety.com/projects/* or xctnproduction.com/work/*. The parent must not carry
+// the ventures' case-study content or it competes with them in search.
+//
+// `cleared` gates rendering. A client appears here only once BOTH are true:
+//   1. the mark is a real asset in /public/images/clients/
+//   2. permission to use it is in writing, and no contract publicity clause forbids it
+// PwC and Chevron are listed so the intent is recorded, but stay dark until cleared.
+//
+// The five testimonials that shipped with this template were deleted on 2026-08-08.
+// Every one was fabricated -- invented people ("Sophie Mitchell, Aura Agency"), invented
+// companies, invented quotes, stock-photo avatars. Publishing them would be fake
+// endorsements. Do not restore them. Real quotes only, from real people, agreed in writing.
 const clients = [
-  { name: 'e.l.f. Cosmetics', logo: '/images/clients/elf.png' },
-  { name: 'NOCCO', logo: '/images/clients/nocco.png' },
-  { name: 'Logitech', logo: '/images/clients/logitech.png' },
-  { name: 'Troia', logo: '/images/clients/troia.png' },
-  { name: 'Apple', logo: '/images/clients/apple.png' },
-  { name: 'Ulta Beauty', logo: '/images/clients/ulta.png' },
-  { name: 'MZ Skin', logo: '/images/clients/mz.png' },
-  { name: 'Barebells', logo: '/images/clients/barebells.png' },
-]
-
-const testimonials = [
-  {
-    quote: 'Working with Jensen & Juhl was a transformative experience for our brand. Their attention to detail and commitment to creative excellence is unmatched.',
-    name: 'Sophie Mitchell',
-    position: 'Founder & Creative Director, Aura Agency',
-    avatar: '/images/avatars/user-01.jpg',
-  },
-  {
-    quote: 'Jensen & Juhl brought a level of innovation and expertise to our project that elevated our brand to new heights.',
-    name: 'Daniel Wu',
-    position: 'COO, Horizon Event Solutions',
-    avatar: '/images/avatars/user-05.jpg',
-  },
-  {
-    quote: 'The team at Jensen & Juhl delivered beyond our expectations. Their design and production capabilities are top-notch.',
-    name: 'Leila Harper',
-    position: 'Marketing Director, BrightWave Productions',
-    avatar: '/images/avatars/user-02.jpg',
-  },
-  {
-    quote: 'Jensen & Juhl demonstrated professionalism, creativity, and an ability to deliver on their promises. They truly make brands stand out.',
-    name: 'Mark Jensen',
-    position: 'CEO, Vivid Concepts',
-    avatar: '/images/avatars/user-03.jpg',
-  },
-  {
-    quote: 'Their 3D rendering and production services were outstanding. Jensen & Juhl captured our ideas perfectly and brought them to life with creativity and precision.',
-    name: 'Maria Costa',
-    position: 'Head of Production, Zen Events',
-    avatar: '/images/avatars/user-04.jpg',
-  },
+  { name: 'PwC', logo: '/images/clients/pwc.svg', cleared: false },
+  { name: 'Chevron', logo: '/images/clients/chevron.svg', cleared: false },
+  { name: 'e.l.f. Cosmetics', logo: '/images/clients/elf.png', cleared: true },
+  { name: 'Ulta Beauty', logo: '/images/clients/ulta.png', cleared: true },
 ]
 
 export default function Clients() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
-
-  const nextTestimonial = useCallback(() => {
-    setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(nextTestimonial, 5000)
-    return () => clearInterval(interval)
-  }, [nextTestimonial])
-
-  const t = testimonials[activeTestimonial]
+  const visible = clients.filter((c) => c.cleared)
+  if (!visible.length) return null
 
   return (
     <section id="clients" className="s-clients">
-      <div className="row section-header" data-aos="fade-up">
+      <div className="row section-header has-bottom-sep" data-aos="fade-up">
         <div className="col-full">
-          <h3 className="subhead">Our Clients</h3>
-          <h1 className="display-2">Proudly Collaborating with Leading Brands Worldwide</h1>
+          <h3 className="subhead">Selected Clients</h3>
+          <h1 className="display-2">
+            The work is delivered for brands that do not get second chances.
+          </h1>
         </div>
       </div>
 
       <div className="row" data-aos="fade-up">
         <div className="clients-logos">
-          {clients.map((client) => (
-            <a key={client.name} href="#0" aria-label={client.name}>
-              <img src={client.logo} alt={`${client.name} Logo`} />
-            </a>
+          {visible.map((client) => (
+            <span key={client.name} className="client-mark">
+              <img src={client.logo} alt={client.name} loading="lazy" />
+            </span>
           ))}
         </div>
       </div>
 
       <div className="row" data-aos="fade-up">
-        <div className="testimonials-wrap">
-          <div className="testimonial">
-            <p>&ldquo;{t.quote}&rdquo;</p>
-            <img src={t.avatar} alt={t.name} className="testimonial__avatar" />
-            <span className="testimonial__name">{t.name}</span>
-            <span className="testimonial__pos">{t.position}</span>
-          </div>
-
-          <div className="testimonial-nav">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                className={i === activeTestimonial ? 'active' : ''}
-                onClick={() => setActiveTestimonial(i)}
-                aria-label={`Testimonial ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
+        <p className="clients-foot">
+          Delivered through Drapery Society and XCTN Production.
+        </p>
       </div>
     </section>
   )

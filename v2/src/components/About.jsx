@@ -33,28 +33,13 @@ export default function About() {
       <div className="row about-desc" data-aos="fade-up">
         <div className="col-full">
           <p>
-            Jensen & Juhl is a vertically integrated holding company operating across
-            drapery fabrication, scenic production, and experiential environments. We
-            bring design authority and end-to-end execution under one roof — from concept
-            through completion, at any scale.
+            Jensen &amp; Juhl is a vertically integrated holding company operating across
+            drapery fabrication, scenic production, experiential environments, and the agentic brain we built to run them. We bring design authority and end-to-end
+            execution under one roof, from concept through completion, at any scale.
           </p>
         </div>
       </div>
 
-      <div className="row stats-bar" data-aos="fade-up">
-        <div className="stats-bar__item">
-          <span className="stats-bar__number">3</span>
-          <span className="stats-bar__label">Companies</span>
-        </div>
-        <div className="stats-bar__item">
-          <span className="stats-bar__number">26+</span>
-          <span className="stats-bar__label">Projects</span>
-        </div>
-        <div className="stats-bar__item">
-          <span className="stats-bar__number">LA</span>
-          <span className="stats-bar__label">Based</span>
-        </div>
-      </div>
     </section>
   )
 }
