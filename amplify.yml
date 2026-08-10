@@ -17,7 +17,21 @@ frontend:
     paths:
       - v2/node_modules/**/*
   customRules:
-    - source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>'
+    # /privacy must resolve to the real page, not the SPA shell.
+    #
+    # ⚠️ Order matters: this has to come BEFORE the catch-all below, which
+    # otherwise swallows it -- the catch-all matches any path with no dot, and
+    # "/privacy" has no dot. That is exactly why /privacy and /terms both 301'd
+    # to the app shell before this existed.
+    #
+    # The page is required for SMS: carriers will not approve a sending number
+    # without a reachable privacy policy stating what is sent and how to opt out.
+    - source: '/privacy'
+      target: /privacy.html
+      status: '200'
+    # `html` added to the passthrough list so privacy.html serves itself instead
+    # of being rewritten to index.html like every other extension-less path.
+    - source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|html)$)([^.]+$)/>'
       target: /index.html
       status: '200'
   customHeaders:
