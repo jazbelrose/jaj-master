@@ -35,7 +35,8 @@ export default function Footer() {
           <ul>
             <li className="footer-grid__address">
               825 South Hill Street<br />
-              Los Angeles, CA 90014
+              Los Angeles, CA<br />
+              90014
             </li>
           </ul>
         </div>
