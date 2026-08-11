@@ -15,8 +15,16 @@
     <meta name="twitter:description" content="Vertically integrated holding company operating across drapery fabrication, scenic production, experiential environments, and the agentic brain we built to run them." />
     <meta name="twitter:image" content="https://www.jensenandjuhl.com/images/og-image.jpg" />
     <link rel="canonical" href="https://www.jensenandjuhl.com/" />
+    <!-- White disc, black mark. Google Search paints the favicon on its own background and
+         does not honour prefers-color-scheme, so the icon has to carry its own contrast in
+         both their light and dark UI. The previous .ico topped out at 48px, which is why
+         Google was upscaling it into mush; masters now go to 512. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64" type="image/x-icon" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Merriweather:wght@300;400;700&display=swap" />
     <script type="application/ld+json">
     {
