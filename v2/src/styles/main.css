@@ -698,9 +698,10 @@ select:focus {
 }
 
 @media only screen and (max-width: 500px) {
-  .home-content { padding-bottom: 8rem; }
-  .svg-banner { margin-top: 6.5rem; }
-  .svg-banner__mark { width: 5rem; height: 5rem; }
+  .home-content { padding-bottom: 7.6rem; }
+  .svg-banner { margin-top: 6.18rem; gap: 1.9rem; }
+  .svg-banner__mark { width: 4.75rem; height: 4.75rem; }
+  .svg-banner__word { font-size: 1.14rem; letter-spacing: 0.162em; }
 }
 
 /* Responsive hero */
@@ -726,9 +727,14 @@ select:focus {
 @media only screen and (max-width: 600px) {
 }
 @media only screen and (max-width: 500px) {
-  .s-home { min-height: 642px; }
-  .home-content__main { text-align: center; max-width: none; padding-top: 13rem; padding-right: 25px; width: 85%; }
-  .home-content__lead { margin-left: auto; margin-right: auto; }
+  .s-home { min-height: 610px; }
+  .home-content br { display: inline; }
+  .home-content h1 { font-size: 2.8rem; }
+  .home-content__lead { font-size: 1.9rem; margin-top: 0.95rem; margin-left: auto; margin-right: auto; }
+  .home-content__main { text-align: center; max-width: none; padding-top: 12.35rem; padding-right: 24px; width: 85%; }
+  .home-content__buttons { padding-top: 4.75rem; }
+  .home-content__buttons .btn { width: 66.5%; margin: 1.425rem 0 0 0; letter-spacing: 0.2375rem; border-radius: 11px; }
+  .home-content__buttons .btn:last-child { margin-bottom: 4rem; }
 }
 
 /* ===================================================================
@@ -754,13 +760,14 @@ select:focus {
   padding: 60px;
   text-align: center;
   z-index: 100;
-  margin: 10px;
+  margin: 10px 0;
   overflow: visible;
 }
 
 .svg-container svg {
   height: auto;
-  width: 100%;
+  width: 90%;
+  max-width: 640px;
 }
 
 /* Stats bar */
