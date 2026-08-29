@@ -6,7 +6,7 @@
 /* memry's own brand face, for the memry wordmark in Our Companies */
 @font-face {
   font-family: "Helvetica Display";
-  src: url("https://d3kix94vejprx7.cloudfront.net/public/fonts/Helvetica-Display.woff2") format("woff2");
+  src: url("https://cdn.jensenandjuhl.com/public/fonts/Helvetica-Display.woff2") format("woff2");
   font-display: swap;
 }
 
